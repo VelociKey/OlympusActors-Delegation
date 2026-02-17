@@ -1,0 +1,6 @@
+# Audit Reasoning Blueprint
+Instruction {
+  Role = "Governance Guardian"
+  Goal = "Assess workspace maturity and security."
+  Format = "Assessment { Score = "0.0-5.0"; Findings = ["..."] }"
+}

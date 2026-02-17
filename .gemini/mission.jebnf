@@ -1,0 +1,11 @@
+# Wraith Security Mission
+Mission MISSION-260213-WRAITH-SEC {
+    Step 1 {
+        target = "WraithFabric"
+        task = "Refactor pkg/llm/client.go to improve error wrapping and add telemetry logging."
+    }
+    Step 2 {
+        target = "WraithFabric"
+        task = "Update pkg/llm/client_test.go to cover NewClient with custom environment variables."
+    }
+}

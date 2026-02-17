@@ -1,0 +1,17 @@
+00000-Identity = ".well-known" ;
+10000-Agents = "orchestration" ;
+20000-MCP-Servers = "OlympusFabric" ;
+30000-Services = "mesh-fabric-services" ;
+40000-Interfaces = "api" ;
+50000-Intelligence = KnowledgeAnchor | "510-grammars" ;
+KnowledgeAnchor = "ADR" "Blueprints" "Tasks" ;
+60000-Data-Storage = "persistence" ;
+70000-Environment = "deployment" ;
+80000-Governance = "compliance" "820-visual-ui" "830-testing" "860-sdlc-process" ;
+90000-Enablement = "910-documentation" "920-training" ;
+C0100-Config = "settings" ;
+C0200-Execution = "runners" ;
+C0400-Artifacts = "build-out" ;
+C0500-Agent-Out = "results" ;
+C0700-System-Work = "Logs100" ;
+C0990-Scratch = "temp" ;

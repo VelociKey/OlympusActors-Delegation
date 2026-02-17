@@ -1,0 +1,159 @@
+# ==============================================================================
+# 🌌 Wraith Workspace Sovereign .gitignore (Olympus2)
+# ==============================================================================
+# Purpose: Handle Multi-Stack Development (Flutter/Go/Firebase)
+# Toolchain: Dagger, Kaniko, Buildah, Podman, Agents, MCP, ANA
+# Owner: AIHub Master Forge
+# ==============================================================================
+
+# --- Root Hygiene & AIHub Specifics ---
+projects.txt
+.chrome/
+.go-temp/
+.temp_scaffold/
+.agent/cache/
+.agent/outputs/
+.agentOutput/
+agent-binary
+
+# --- Workspace Hygiene (Wraith Structured Folders) ---
+# These folders are designated for ephemeral or generated artifacts
+C0400-Artifacts/
+C0500-Agent-Out/
+C0700-System-Work/
+C0990-Scratch/
+tmp/
+.temp/
+.history/
+
+# --- Large Binaries & Tooling (CRITICAL: DO NOT COMMIT) ---
+# Maps to 90000-Enablement/Tools in Olympus2
+**/Tools/
+**/sdk/
+**/jvm-sdk/
+**/packaging_tools/
+**/ollama-models/
+**/trivy.db
+**/test_cache/
+dagger.log
+.terraform/
+terraform.tfstate*
+
+# --- IDE & OS (VS Code / JetBrains / Windows / macOS) ---
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+Desktop.ini
+Thumbs.db
+.DS_Store
+*.bak
+*.swp
+*.log
+
+# --- Go Back-End (Services & Agents) ---
+bin/
+pkg/
+vendor/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.prof
+go.work.sum
+gosec_report.json
+
+# --- Dart & Flutter Front-End (Interaction Surfaces) ---
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+*.dart.js
+*.dill
+*.track.dill
+**/app.dill
+**/app.dill.track.dill
+android/local.properties
+ios/.generated/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+
+# --- Firebase (Cloud Services) ---
+.firebase/
+firebase-debug.log
+firestore-debug.log
+pubsub-debug.log
+ui-debug.log
+firebase-export*/
+*.local.env
+
+# --- Dagger (CI/CD Pipelines) ---
+.dagger/
+
+# --- Multi-Container Tooling (Kaniko, Buildah, Podman Desktop) ---
+.docker/
+.podman/
+.buildah/
+.kaniko/
+auth.json
+*.image.tar
+*.tar
+*.sealed.zst
+
+# --- Agentic Infrastructure (Agent (Aw), MCP Server, ANA) ---
+# MCP: Model Context Protocol Server artifacts
+**/mcp-cache/
+**/mcp-logs/
+
+# ANA: Agentic Network Architecture traces and state
+*.ana-trace
+*.ana-state
+*.ana-snapshot
+
+# --- Fleet-wide Artifact Patterns ---
+[CcWw][0-9]*/
+w[0-9][0-9][0-9]-*/
+w[0-9][0-9][0-9][0-9]-*/
+**/ephemeral/
+playwright-report/
+analysis/
+dist/
+out/
+target/
+test-results/
+test_output.txt
+
+# --- Binaries & Archives ---
+*.7z
+*.gz
+*.jar
+*.rar
+*.zip
+*.msi
+*.class
+*.wasm
+*.pdb
+*.jmod
+*.jsa
+*.lib
+
+# --- ✅ Master Forge Exceptions ---
+!sbom.json
+!LICENSE
+!README.md
+!BLUEPRINT.md
+!ADR-*.md
+!*.go
+!*.dart
+!*.yaml
+!*.json
+!*.md
+!*.proto
+!*.sh
+!*.ps1
+!*.cmd
+!*.go.work

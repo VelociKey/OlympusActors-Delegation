@@ -1,0 +1,25 @@
+# Workspace Structure Grammar (WSG)
+
+workspace = { structure_item } ;
+
+structure_item = directory | file ;
+
+directory = dir_name [ description ] [ "{" { structure_item } "}" ] ;
+
+file = file_name [ description ] [ ":" template_ref ] ;
+
+dir_name = prefix "-" name ;
+
+file_name = [ "." ] identifier [ "." identifier ] ;
+
+prefix = digit { digit } ;
+
+name = identifier { "-" identifier } ;
+
+identifier = letter { letter | digit | "_" } ;
+
+description = "(" string ")" ;
+
+template_ref = identifier ;
+
+string = "\"" { all_chars } "\"" ;

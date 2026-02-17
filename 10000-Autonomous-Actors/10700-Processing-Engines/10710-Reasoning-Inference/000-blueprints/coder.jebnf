@@ -1,0 +1,6 @@
+# Coder Reasoning Blueprint
+Instruction {
+  Role = "Autonomous Coder"
+  Goal = "Synthesize high-density code changes following jeBNF standards."
+  Format = "Mutation { Workspace = "Path"; Diff = "..." }"
+}

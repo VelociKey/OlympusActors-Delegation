@@ -1,0 +1,95 @@
+# OlympusActors-Delegation Workspace DNA (jeBNF-MPH)
+workspace_name = "OlympusActors-Delegation"
+
+  Item 0  "LICENSE" 6cd1a00ed465f494f31375e8d8c2ccc585b8b4acee4ba0110ba8fbe2dc4d1adc 1313
+  Item 1 .md "README.md" ae6f40f3ffb26998b7b2d71b5d5da25c0c4b10fa4f37cb24c7af72033ecc9546 1384
+  Domain ".gemini" {
+    Item 2 .jebnf "mission.jebnf" 6ad9c484e1f2ba3fb8b6b67b5ffee75e049764f90406c86a4adb24282a42d353 375
+  }
+  Domain "00000-Identity-Foundations" {
+    Item 3 .well-known ".well-known" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "10000-Autonomous-Actors" {
+    Domain "10500-Delegation-Management" {
+      Domain "10520-Market-Coordination" {
+        Item 4 .mod "go.mod" 6d353ee4188b0e42a3bb3f24ea2929ef50d533744a97e0ab700c37c4607819f0 143
+        Item 5 .sum "go.sum" 619e80b210ce3da2092dc92de66b5c498f4498fa077d251f2eac81b7ff0e8e36 147
+        Item 6 .go "main.go" ca33640189dc466960b26e8bdadb59cbf15b8baf8e8110e2ca7ab542f0ee5f89 3563
+      }
+      Domain "10530-Orchestration-Control" {
+        Item 7 .mod "go.mod" 12b5b782730ebd4d79a22160902cda48fdb0a3e8ccac6fdd75e3522a7b5f699f 145
+        Item 8 .sum "go.sum" 1e6d0024f5f484943e248a0359eef2a2347e97eabc8591974424d0c113374961 815
+        Item 9 .go "main.go" c97dd8d584d4dfebafef81bf9e33d01dd1fd72f7c362f4474924a2d32d3b2ffc 4258
+      }
+    }
+    Domain "10700-Processing-Engines" {
+      Domain "10710-Reasoning-Inference" {
+        Item 10 .mod "go.mod" 150626d2d71f449c9cc24a46120d5529ed71002759c3b9e51b5eb71ff2acdc81 140
+        Item 11 .sum "go.sum" 1e6d0024f5f484943e248a0359eef2a2347e97eabc8591974424d0c113374961 815
+        Item 12 .go "main.go" 805875d30698bcdbba001325cc1af9124bb83bac88c5cd61ac3a6e5cdfe21fe0 5210
+        Domain "blueprints" {
+          Item 13 .jebnf "audit.jebnf" 26883340b1efec3256fee308a6d5c2a7c67372a74db9b570be56f16d43decbac 198
+          Item 14 .jebnf "coder.jebnf" 7627be2de345a67fd670dc36ec4ba630f5d09a614b3a1b33b36ac157ecc9884c 212
+          Item 15 .jebnf "orchestrator.jebnf" c21a76c6e4ee2b3498017c505918badce388902b80f82d6e00a65c88c507d98b 396
+        }
+      }
+    }
+  }
+  Domain "30000-Federated-Services" {
+    Item 16  "internal" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "50000-Intelligence-Framework" {
+    Domain "510-grammars" {
+      Item 17 .eBNF "workspace.eBNF" 9d297ce579fce64001dd121394e190b23176911455c8aee93c29782165356a69 556
+    }
+    Domain "KnowledgeAnchor" {
+      Domain "ADR" {
+        Item 18 .md "ADR-000-OlympusFabric-Evolution.md" 733ee6020a1c8ef042f35d1531bbd508c9e58f2500596d5cc2829c0e23db4c7f 1911
+      }
+      Domain "Blueprints" {
+        Item 19 .md "Fabric-Orchestrator-State-Machine.md" 8b18487c845b4d0471ad31bfc70eb70fa26ae8759e247ac16397af0bcc9df3e4 2159
+        Item 20 .ebnf "OlympusFabric.workspace.ebnf" 3e2dfc74b766b86a033b34e2dfc4bbbb7e2588be32380467986eb9143794e953 681
+      }
+      Domain "Cycles" {
+        Item 21 .vkcycle "CYC-002.vkcycle" 45d1953e2ebc25a41f643efa6c10c6928f5baac3ed9fc8fac859718a1805d88a 1580
+      }
+      Domain "Tasks" {
+        Item 22 .md "001-Core-Migration.md" a1ca635b7a4713927e4649f10ac0f8f5a816150dcafece8ee374b3f58fbb8ab8 934
+        Item 23 .md "Cycle-Tracking-Plan-CYC-002.md" 3b07ccd2ed58eec78e3d6296cbe8325fdef8b0495f27e5971c815b3eb059a08c 1414
+      }
+    }
+  }
+  Domain "60000-Information-Storage" {
+    Item 24  "persistence" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "70000-Environmental-Harness" {
+    Item 25  "deployment" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "80000-System-Governance" {
+    Item 26 .md "Operational-Guide-Fabric-Orchestrator.md" 8b59cb20e8ffb0b39ee7ded66afd3aa33a432177fcfb13caaadefcd6a6dcdd48 2729
+    Item 27  "compliance" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "C0100-Configuration-Registry" {
+    Item 28  "settings" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "C0200-Execution-Campaigns" {
+    Item 29  "runners" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "C0400-Artifact-Repository" {
+    Item 30  "build-out" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "C0500-Agent-Intelligence-Outputs" {
+    Item 31  "results" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "C0700-System-Operations" {
+    Item 32  "Logs100" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
+  Domain "C0990-Ephemeral-Scratch" {
+    Item 33  "temp" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+    Item 34 .ebnf "test.ebnf" eaf54a424fc9f8fbdeb9e74dd7979b4e984d947e5229ddb2a16a8fe5d070bb9c 116
+  }
+  Domain "KnowledgeAnchor" {
+    Item 35  "ADR" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+    Item 36  "Blueprints" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+    Item 37  "Tasks" e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0
+  }
