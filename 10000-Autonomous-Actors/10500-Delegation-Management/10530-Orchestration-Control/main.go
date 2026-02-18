@@ -14,10 +14,10 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
-	olympusv1 "github.com/VelociKey/Olympus2/gen/olympus/v1"
-	"github.com/VelociKey/Olympus2/gen/olympus/v1/olympusv1connect"
-	"github.com/VelociKey/Olympus2/pkg/mesh"
-	"github.com/VelociKey/Olympus2/pkg/whisper"
+	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-000-v1"
+	"Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-000-v1/000-olympusv1connect"
+	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-mesh"
+	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-whisper"
 )
 
 type OrchestratorServer struct {
@@ -31,18 +31,24 @@ type OrchestratorServer struct {
 
 func (s *OrchestratorServer) Dispatch(ctx context.Context, req *connect.Request[olympusv1.DispatchRequest]) (*connect.Response[olympusv1.DispatchResponse], error) {
 	meta := mesh.FromContext(ctx)
-	if meta.MissionID == "" { meta.MissionID = mesh.GenerateID("msn") }
-	if meta.InstigatorID == "" { meta.InstigatorID = req.Msg.Instigator }
+	if meta.MissionID == "" {
+		meta.MissionID = mesh.GenerateID("msn")
+	}
+	if meta.InstigatorID == "" {
+		meta.InstigatorID = req.Msg.Instigator
+	}
 	ctx = mesh.NewContext(ctx, meta)
 
 	slog.Info("🎯 Orchestrator: Dispatching Intent", "intent", req.Msg.Intent, "mission", meta.MissionID)
 
 	prompt := fmt.Sprintf("DETERMINE THE BEST AGENT AND ACTION FOR THIS INTENT: %s. OPTIONS: Coder (mutation), SovereignAudit (assess), SemanticCartographer (search).", req.Msg.Intent)
 	res, err := s.inferenceClient.Reason(ctx, connect.NewRequest(&olympusv1.ReasonRequest{Prompt: prompt, Context: map[string]string{"blueprint": "orchestrator"}}))
-	
+
 	targetAgent := "Coder"
 	reason := "Default routing"
-	if err == nil { reason = res.Msg.Output }
+	if err == nil {
+		reason = res.Msg.Output
+	}
 
 	_, logErr := s.memoryClient.LogEvent(ctx, connect.NewRequest(&olympusv1.EventRequest{
 		Agent: "Orchestrator", Action: "dispatch", Target: targetAgent, Status: "Success", Output: reason,
@@ -56,8 +62,10 @@ func (s *OrchestratorServer) Dispatch(ctx context.Context, req *connect.Request[
 }
 
 func main() {
-	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}); slog.SetDefault(slog.New(handler))
-	meshHubURL := getEnv("MESH_HUB_URL", "http://localhost:8090"); guardianURL := getEnv("GUARDIAN_URL", "http://localhost:8082")
+	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo})
+	slog.SetDefault(slog.New(handler))
+	meshHubURL := getEnv("MESH_HUB_URL", "http://localhost:8090")
+	guardianURL := getEnv("GUARDIAN_URL", "http://localhost:8082")
 	interceptors := connect.WithInterceptors(mesh.NewInterceptor(guardianURL))
 
 	token, err := mesh.Handshake(context.Background(), guardianURL, "Orchestrator", "HW-WIN-01", []string{"routing", "governance"})
@@ -66,11 +74,11 @@ func main() {
 	}
 
 	server := &OrchestratorServer{
-		agentToken: token,
-		memoryClient: olympusv1connect.NewMemoryServiceClient(http.DefaultClient, getEnv("MEMORY_URL", "http://localhost:8084"), interceptors),
+		agentToken:      token,
+		memoryClient:    olympusv1connect.NewMemoryServiceClient(http.DefaultClient, getEnv("MEMORY_URL", "http://localhost:8084"), interceptors),
 		knowledgeClient: olympusv1connect.NewKnowledgeServiceClient(http.DefaultClient, getEnv("CARTOGRAPHER_URL", "http://localhost:8095"), interceptors),
 		inferenceClient: olympusv1connect.NewInferenceServiceClient(http.DefaultClient, getEnv("INFERENCE_URL", "http://localhost:8087"), interceptors),
-		sc: whisper.New("Orchestrator", "orchestrator.lpsv"),
+		sc:              whisper.New("Orchestrator", "orchestrator.lpsv"),
 	}
 
 	mux := http.NewServeMux()
@@ -80,8 +88,9 @@ func main() {
 		Handler:           h2c.NewHandler(mux, &http2.Server{}),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
-	
-	stop := make(chan os.Signal, 1); signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		time.Sleep(1 * time.Second)
 		if err := mesh.RegisterWithMesh(context.Background(), meshHubURL, "Orchestrator", 8080, "router", []string{"handshake-verified"}); err != nil {
@@ -98,6 +107,8 @@ func main() {
 }
 
 func getEnv(key, fallback string) string {
-	if val, ok := os.LookupEnv(key); ok { return val }
+	if val, ok := os.LookupEnv(key); ok {
+		return val
+	}
 	return fallback
 }
