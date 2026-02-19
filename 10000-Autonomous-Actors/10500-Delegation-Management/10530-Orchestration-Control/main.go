@@ -14,8 +14,8 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
-	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-000-v1"
-	"Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-000-v1/000-olympusv1connect"
+	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-olympus/000-v1"
+	"Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-olympus/000-v1/olympusv1connect"
 	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-mesh"
 	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-whisper"
 )
@@ -112,3 +112,4 @@ func getEnv(key, fallback string) string {
 	}
 	return fallback
 }
+
