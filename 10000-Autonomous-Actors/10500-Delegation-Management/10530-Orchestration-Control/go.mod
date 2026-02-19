@@ -3,11 +3,17 @@ module OlympusActors-Delegation/10000-Autonomous-Actors/10500-Delegation-Managem
 go 1.25.7
 
 // Local Resolution
-replace Olympus2 => ../../../../Olympus2
-
 replace Olympus2/00000-Identity-Foundations/010-Vision/900-AegisGuardian => ../../../../Olympus2/00000-Identity-Foundations/010-Vision/900-AegisGuardian
 
 replace Olympus2/00000-Identity-Foundations/020-Blueprints/00100-ADCIdentity => ../../../../Olympus2/00000-Identity-Foundations/020-Blueprints/00100-ADCIdentity
+
+replace Olympus2/00000-Identity-Foundations/P0000-pkg/check.v1 => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/check.v1
+
+replace Olympus2/00000-Identity-Foundations/P0000-pkg/go-internal => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/go-internal
+
+replace Olympus2/00000-Identity-Foundations/P0000-pkg/pretty => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/pretty
+
+replace Olympus2/00000-Identity-Foundations/P0000-pkg/text => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/text
 
 replace Olympus2/20000-Context-Bridges/900-CapabilityProvider => ../../../../Olympus2/20000-Context-Bridges/900-CapabilityProvider
 
@@ -49,6 +55,10 @@ replace Olympus2/70000-Environmental-Harness/900-EnvironmentHarness => ../../../
 
 replace Olympus2/80000-System-Governance/820-Sovereign-Audit/900-SovereignAudit => ../../../../Olympus2/80000-System-Governance/820-Sovereign-Audit/900-SovereignAudit
 
+replace Olympus2/90000-Enablement-Labs => ../../../../Olympus2/90000-Enablement-Labs
+
+replace Olympus2/90000-Enablement-Labs/000-Tools/sovereign => ../../../../Olympus2/90000-Enablement-Labs/000-Tools/sovereign
+
 replace Olympus2/90000-Enablement-Labs/900-Forge => ../../../../Olympus2/90000-Enablement-Labs/900-Forge
 
 replace Olympus2/90000-Enablement-Labs/900-Forge/000-internal/000-agent => ../../../../Olympus2/90000-Enablement-Labs/900-Forge/000-internal/000-agent
@@ -79,9 +89,15 @@ replace OlympusActors-Delegation/10000-Autonomous-Actors/10500-Delegation-Manage
 
 replace OlympusActors-Delegation/10000-Autonomous-Actors/10700-Processing-Engines/10710-Reasoning-Inference => ../../10700-Processing-Engines/10710-Reasoning-Inference
 
+replace OlympusAssurance/10000-Autonomous-Actors/900-WorkstationValidator => ../../../../OlympusAssurance/10000-Autonomous-Actors/900-WorkstationValidator
+
+replace OlympusAssurance/10000-Autonomous-Actors/950-SovereignSaaS => ../../../../OlympusAssurance/10000-Autonomous-Actors/950-SovereignSaaS
+
 replace OlympusAtelier/10000-Autonomous-Actors/000-StyleGuard => ../../../../OlympusAtelier/10000-Autonomous-Actors/000-StyleGuard
 
 replace OlympusAtelier/90000-Enablement-Labs/930-System-Enablers/000-NomenclatureStabilizer => ../../../../OlympusAtelier/90000-Enablement-Labs/930-System-Enablers/000-NomenclatureStabilizer
+
+replace OlympusForge/00000-Identity-Foundations/P0000-pkg/000-fleet => ../../../../OlympusForge/00000-Identity-Foundations/P0000-pkg/000-fleet
 
 replace OlympusForge/10000-Autonomous-Actors/000-ForgeToolManager => ../../../../OlympusForge/10000-Autonomous-Actors/000-ForgeToolManager
 
@@ -107,6 +123,8 @@ replace OlympusForge/90000-Enablement-Labs/000-Tools/000-scaffolding => ../../..
 
 replace OlympusForge/90000-Enablement-Labs/000-Tools/000-tree => ../../../../OlympusForge/90000-Enablement-Labs/000-Tools/000-tree
 
+replace OlympusForge/90000-Enablement-Labs/930-System-Enablers => ../../../../OlympusForge/90000-Enablement-Labs/930-System-Enablers
+
 replace OlympusForge/90000-Enablement-Labs/930-System-Enablers/fleet-indexer => ../../../../OlympusForge/90000-Enablement-Labs/930-System-Enablers/fleet-indexer
 
 replace OlympusForge/90000-Enablement-Labs/930-System-Enablers/fleet-manager => ../../../../OlympusForge/90000-Enablement-Labs/930-System-Enablers/fleet-manager
@@ -115,17 +133,15 @@ replace OlympusForge/90000-Enablement-Labs/930-System-Enablers/fleet-mapper => .
 
 replace OlympusForge/C0200-Execution-Campaigns/000-ForgeToolManager => ../../../../OlympusForge/C0200-Execution-Campaigns/000-ForgeToolManager
 
-replace OlympusForge/P0000-pkg/000-fleet => ../../../../OlympusForge/P0000-pkg/000-fleet
-
 replace OlympusGCP-Compute => ../../../../OlympusGCP-Compute
 
 replace OlympusGCP-Compute/10000-Autonomous-Actors/900-ComputeManager => ../../../../OlympusGCP-Compute/10000-Autonomous-Actors/900-ComputeManager
 
 replace OlympusGCP-Compute/20000-Context-Bridges/900-ComputeBridge => ../../../../OlympusGCP-Compute/20000-Context-Bridges/900-ComputeBridge
 
-replace OlympusGCP-Compute/gen/compute/v1x => ../../../../OlympusGCP-Compute/gen/compute/v1x
+replace OlympusGCP-Compute/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/compute/v1x => ../../../../OlympusGCP-Compute/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/compute/v1x
 
-replace OlympusGCP-Compute/gen/compute/v1x/computev1connect => ../../../../OlympusGCP-Compute/gen/compute/v1x/computev1connect
+replace OlympusGCP-Compute/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/compute/v1x/computev1connect => ../../../../OlympusGCP-Compute/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/compute/v1x/computev1connect
 
 replace OlympusGCP-Data => ../../../../OlympusGCP-Data
 
@@ -139,9 +155,9 @@ replace OlympusGCP-Events/10000-Autonomous-Actors/900-EventManager => ../../../.
 
 replace OlympusGCP-Events/20000-Context-Bridges/900-EventBridge => ../../../../OlympusGCP-Events/20000-Context-Bridges/900-EventBridge
 
-replace OlympusGCP-Events/gen/events/v1x => ../../../../OlympusGCP-Events/gen/events/v1x
+replace OlympusGCP-Events/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/events/v1x => ../../../../OlympusGCP-Events/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/events/v1x
 
-replace OlympusGCP-Events/gen/events/v1x/eventsv1connect => ../../../../OlympusGCP-Events/gen/events/v1x/eventsv1connect
+replace OlympusGCP-Events/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/events/v1x/eventsv1connect => ../../../../OlympusGCP-Events/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/events/v1x/eventsv1connect
 
 replace OlympusGCP-FinOps => ../../../../OlympusGCP-FinOps
 
@@ -149,9 +165,9 @@ replace OlympusGCP-FinOps/10000-Autonomous-Actors/900-FinOpsManager => ../../../
 
 replace OlympusGCP-FinOps/20000-Context-Bridges/900-FinOpsBridge => ../../../../OlympusGCP-FinOps/20000-Context-Bridges/900-FinOpsBridge
 
-replace OlympusGCP-FinOps/gen/finops/v1x => ../../../../OlympusGCP-FinOps/gen/finops/v1x
+replace OlympusGCP-FinOps/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/finops/v1x => ../../../../OlympusGCP-FinOps/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/finops/v1x
 
-replace OlympusGCP-FinOps/gen/finops/v1x/finopsv1connect => ../../../../OlympusGCP-FinOps/gen/finops/v1x/finopsv1connect
+replace OlympusGCP-FinOps/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/finops/v1x/finopsv1connect => ../../../../OlympusGCP-FinOps/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/finops/v1x/finopsv1connect
 
 replace OlympusGCP-Intelligence => ../../../../OlympusGCP-Intelligence
 
@@ -159,9 +175,9 @@ replace OlympusGCP-Intelligence/10000-Autonomous-Actors/900-IntelligenceManager 
 
 replace OlympusGCP-Intelligence/20000-Context-Bridges/900-IntelligenceBridge => ../../../../OlympusGCP-Intelligence/20000-Context-Bridges/900-IntelligenceBridge
 
-replace OlympusGCP-Intelligence/gen/intelligence/v1x => ../../../../OlympusGCP-Intelligence/gen/intelligence/v1x
+replace OlympusGCP-Intelligence/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/intelligence/v1x => ../../../../OlympusGCP-Intelligence/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/intelligence/v1x
 
-replace OlympusGCP-Intelligence/gen/intelligence/v1x/intelligencev1connect => ../../../../OlympusGCP-Intelligence/gen/intelligence/v1x/intelligencev1connect
+replace OlympusGCP-Intelligence/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/intelligence/v1x/intelligencev1connect => ../../../../OlympusGCP-Intelligence/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/intelligence/v1x/intelligencev1connect
 
 replace OlympusGCP-Observability => ../../../../OlympusGCP-Observability
 
@@ -169,9 +185,9 @@ replace OlympusGCP-Observability/10000-Autonomous-Actors/900-ObsManager => ../..
 
 replace OlympusGCP-Observability/20000-Context-Bridges/900-ObsBridge => ../../../../OlympusGCP-Observability/20000-Context-Bridges/900-ObsBridge
 
-replace OlympusGCP-Observability/gen/obs/v1x => ../../../../OlympusGCP-Observability/gen/obs/v1x
+replace OlympusGCP-Observability/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/obs/v1x => ../../../../OlympusGCP-Observability/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/obs/v1x
 
-replace OlympusGCP-Observability/gen/obs/v1x/obsv1connect => ../../../../OlympusGCP-Observability/gen/obs/v1x/obsv1connect
+replace OlympusGCP-Observability/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/obs/v1x/obsv1connect => ../../../../OlympusGCP-Observability/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/obs/v1x/obsv1connect
 
 replace OlympusGCP-Storage => ../../../../OlympusGCP-Storage
 
@@ -179,9 +195,9 @@ replace OlympusGCP-Storage/10000-Autonomous-Actors/900-StorageManager => ../../.
 
 replace OlympusGCP-Storage/20000-Context-Bridges/900-StorageBridge => ../../../../OlympusGCP-Storage/20000-Context-Bridges/900-StorageBridge
 
-replace OlympusGCP-Storage/gen/storage/v1x => ../../../../OlympusGCP-Storage/gen/storage/v1x
+replace OlympusGCP-Storage/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/storage/v1x => ../../../../OlympusGCP-Storage/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/storage/v1x
 
-replace OlympusGCP-Storage/gen/storage/v1x/storagev1connect => ../../../../OlympusGCP-Storage/gen/storage/v1x/storagev1connect
+replace OlympusGCP-Storage/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/storage/v1x/storagev1connect => ../../../../OlympusGCP-Storage/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/storage/v1x/storagev1connect
 
 replace OlympusGCP-Vault => ../../../../OlympusGCP-Vault
 
@@ -189,9 +205,9 @@ replace OlympusGCP-Vault/10000-Autonomous-Actors/900-VaultManager => ../../../..
 
 replace OlympusGCP-Vault/20000-Context-Bridges/900-VaultBridge => ../../../../OlympusGCP-Vault/20000-Context-Bridges/900-VaultBridge
 
-replace OlympusGCP-Vault/gen/vault/v1x => ../../../../OlympusGCP-Vault/gen/vault/v1x
+replace OlympusGCP-Vault/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/vault/v1x => ../../../../OlympusGCP-Vault/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/vault/v1x
 
-replace OlympusGCP-Vault/gen/vault/v1x/vaultv1connect => ../../../../OlympusGCP-Vault/gen/vault/v1x/vaultv1connect
+replace OlympusGCP-Vault/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/vault/v1x/vaultv1connect => ../../../../OlympusGCP-Vault/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/vault/v1x/vaultv1connect
 
 replace OlympusGrammar/10000-Autonomous-Actors/900-Architect => ../../../../OlympusGrammar/10000-Autonomous-Actors/900-Architect
 
@@ -217,23 +233,21 @@ replace OlympusGrammar/20000-Context-Bridges/000-OlympusGrammar/P0000-pkg/000-pa
 
 replace OlympusGrammar/20000-Context-Bridges/000-OlympusGrammar/P0000-pkg/000-transformer => ../../../../OlympusGrammar/20000-Context-Bridges/000-OlympusGrammar/P0000-pkg/000-transformer
 
-replace OlympusGrammar/gen/grammar/v1x => ../../../../OlympusGrammar/gen/grammar/v1x
+replace OlympusGrammar/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/grammar/v1x => ../../../../OlympusGrammar/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/grammar/v1x
 
-replace OlympusGrammar/gen/grammar/v1x/grammarv1connect => ../../../../OlympusGrammar/gen/grammar/v1x/grammarv1connect
+replace OlympusGrammar/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/grammar/v1x/grammarv1connect => ../../../../OlympusGrammar/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/grammar/v1x/grammarv1connect
 
 replace OlympusInfrastructure => ../../../../OlympusInfrastructure
 
-replace Tools/sovereign => ../../../../Tools/sovereign
+replace text => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/text
 
-replace text => ../../../../text
+replace pretty => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/pretty
 
-replace pretty => ../../../../pretty
+replace go-internal => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/go-internal
 
-replace go-internal => ../../../../go-internal
+replace check.v1 => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/check.v1
 
-replace check.v1 => ../../../../check.v1
-
-replace gopkg.in/check.v1 => ../../../../check.v1
+replace gopkg.in/check.v1 => ../../../../Olympus2/00000-Identity-Foundations/P0000-pkg/check.v1
 
 require (
 	Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-000-v1 v0.0.0-00010101000000-000000000000
