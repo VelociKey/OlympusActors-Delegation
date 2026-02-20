@@ -35,9 +35,9 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 
-	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-olympus/000-v1"
+	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1"
 
-	olympusv1connect "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/000-olympus/000-v1/olympusv1connect"
+	olympusv1connect "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1/olympusv1connect"
 
 	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-mesh"
 

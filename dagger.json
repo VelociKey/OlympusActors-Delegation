@@ -1,5 +1,9 @@
-﻿{
-    "sdk":  "go",
-    "name":  "olympusactors-delegation",
-    "source":  "70000-Environmental-Harness/dagger"
+{
+  "name": "olympusactors-delegation",
+  "engineVersion": "v0.19.11",
+  "sdk": {
+    "source": "go"
+  },
+  "source": "70000-Environmental-Harness/dagger",
+  "disableDefaultFunctionCaching": true
 }
