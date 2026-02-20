@@ -1,5 +1,5 @@
 # ==============================================================================
-# 🌌 Wraith Workspace Sovereign .gitignore (Olympus2)
+# 🌌 Sovereign Fleet Workspace Standard .gitignore
 # ==============================================================================
 # Purpose: Handle Multi-Stack Development (Flutter/Go/Firebase)
 # Toolchain: Dagger, Kaniko, Buildah, Podman, Agents, MCP, ANA
@@ -27,7 +27,7 @@ tmp/
 .history/
 
 # --- Large Binaries & Tooling (CRITICAL: DO NOT COMMIT) ---
-# Maps to 90000-Enablement/Tools in Olympus2
+# Maps to 90000-Enablement/Tools
 **/Tools/
 **/sdk/
 **/jvm-sdk/
@@ -157,3 +157,7 @@ test_output.txt
 !*.ps1
 !*.cmd
 !*.go.work
+!*.jebnf
+!*.mission
+!C0100-Configuration-Registry/
+!C0700-System-Operations/
