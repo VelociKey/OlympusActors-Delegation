@@ -16,8 +16,8 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
-	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1"
-	olympusv1connect "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1/olympusv1connect"
+	olympusv1 "Olympus2/gen/v1/olympus"
+	olympusv1connect "Olympus2/gen/v1/olympus/olympusv1connect"
 	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-mesh"
 	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-whisper"
 )
@@ -67,6 +67,11 @@ func main() {
 	interceptors := connect.WithInterceptors(mesh.NewInterceptor(guardianURL))
 	mux.Handle(olympusv1connect.NewMeshServiceHandler(hub, interceptors))
 	mux.HandleFunc("/status", hub.handleStatus)
+	// Health Check / Pulse
+	mux.HandleFunc("/pulse", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"status":"HEALTHY", "workspace":"OlympusActors-Delegation", "time":"%s"}`, time.Now().Format(time.RFC3339))
+	})
 	srv := &http.Server{
 		Addr:              ":8090",
 		Handler:           h2c.NewHandler(mux, &http2.Server{}),

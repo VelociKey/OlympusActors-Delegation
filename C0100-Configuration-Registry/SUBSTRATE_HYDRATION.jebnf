@@ -1,0 +1,21 @@
+# SUBSTRATE_HYDRATION.jebnf
+# Defines the state-machine sequence for environment construction.
+
+HydrationSequence = { Step };
+
+Step = (MaterializeStep | VerifyStep | ScriptStep);
+
+MaterializeStep = "materialize" " source=" string " target=" string " transformer=" TransformerType ";";
+
+VerifyStep = "verify" " target=" string " checksum=" string ";";
+
+ScriptStep = "execute" " script=" string ";";
+
+TransformerType = "jebnf-to-json" | "jebnf-to-yaml" | "raw";
+
+# The actual sequence for the current fleet state:
+Sequence "Primary" {
+    materialize source="Olympus2/C0100-Configuration-Registry/ide_standards.jebnf" target=".vscode/settings.json" transformer="jebnf-to-json";
+    materialize source="Olympus2/C0100-Configuration-Registry/security_policy.jebnf" target=".trivy.yaml" transformer="jebnf-to-yaml";
+    execute script="go work sync";
+}
