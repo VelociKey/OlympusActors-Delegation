@@ -15,8 +15,8 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
-	olympusv1 "Olympus2/gen/v1/olympus"
-	"Olympus2/gen/v1/olympus/olympusv1connect"
+	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1"
+	"Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1/olympusv1connect"
 	auth "Olympus2/90000-Enablement-Labs/P0000-pkg/000-auth"
 )
 
