@@ -25,7 +25,6 @@ import (
 
 	"time"
 
-
 	"connectrpc.com/connect"
 
 	"golang.org/x/net/http2"
@@ -34,14 +33,13 @@ import (
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	olympusv1 "olympus.fleet/00SDLC/Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/400-Gen/olympus/v1"
 
-	olympusv1 "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1"
+	olympusv1connect "olympus.fleet/00SDLC/Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/400-Gen/olympus/v1/olympusv1connect"
 
-	olympusv1connect "Olympus2/40000-Communication-Contracts/430-Protocol-Definitions/000-gen/olympus/v1/olympusv1connect"
+	mesh "olympus.fleet/00SDLC/Olympus2/90000-Enablement-Labs/P0900-Labs/150-Mesh"
 
-	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-mesh"
-
-	"Olympus2/90000-Enablement-Labs/P0000-pkg/000-whisper"
+	whisper "olympus.fleet/00SDLC/Olympus2/90000-Enablement-Labs/P0900-Labs/220-Whisper"
 )
 
 type InferenceServer struct {
@@ -55,7 +53,6 @@ func (s *InferenceServer) Reason(ctx context.Context, req *connect.Request[olymp
 	prompt := req.Msg.Prompt
 	traceID := mesh.FromContext(ctx).TraceID
 
-
 	if bpName, ok := req.Msg.Context["blueprint"]; ok {
 		s.mu.RLock()
 		if template, exists := s.blueprints[bpName]; exists {
@@ -64,11 +61,12 @@ func (s *InferenceServer) Reason(ctx context.Context, req *connect.Request[olymp
 		s.mu.RUnlock()
 	}
 
-
 	slog.Info("🧠 Inference: Draft Phase", "blueprint", req.Msg.Context["blueprint"], "trace_id", traceID)
 
 	draft, err := s.geminiCall(ctx, prompt)
-	if err != nil { return nil, connect.NewError(connect.CodeInternal, err) }
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
 
 	finalOutput := draft
 
@@ -84,9 +82,11 @@ RULES:
 1. Ensure strict structural adherence to the requested format.
 2. Correct any hallucinated agent names or paths.
 3. Return ONLY the finalized, corrected jeBNF block.`, draft)
-		
+
 		refined, err := s.geminiCall(ctx, critiquePrompt)
-		if err == nil { finalOutput = refined }
+		if err == nil {
+			finalOutput = refined
+		}
 	}
 
 	return connect.NewResponse(&olympusv1.ReasonResponse{
@@ -100,18 +100,24 @@ func (s *InferenceServer) geminiCall(ctx context.Context, prompt string) (string
 	cmd := exec.CommandContext(ctx, "gemini", "-p", prompt)
 	out, err := cmd.CombinedOutput()
 
-	if err != nil { return "", fmt.Errorf("gemini failed: %w", err) }
+	if err != nil {
+		return "", fmt.Errorf("gemini failed: %w", err)
+	}
 	return strings.TrimSpace(string(out)), nil
 }
 
 func (s *InferenceServer) Embed(ctx context.Context, req *connect.Request[olympusv1.EmbedRequest]) (*connect.Response[olympusv1.EmbedResponse], error) {
 	vec := make([]float32, 1536)
-	for i := range vec { vec[i] = 0.05 }
+	for i := range vec {
+		vec[i] = 0.05
+	}
 	return connect.NewResponse(&olympusv1.EmbedResponse{Vectors: vec}), nil
 }
 
 func (s *InferenceServer) Pulse(ctx context.Context, req *connect.Request[olympusv1.PulseRequest]) (*connect.Response[olympusv1.PulseResponse], error) {
-	s.mu.RLock(); bpCount := len(s.blueprints); s.mu.RUnlock()
+	s.mu.RLock()
+	bpCount := len(s.blueprints)
+	s.mu.RUnlock()
 	return connect.NewResponse(&olympusv1.PulseResponse{
 
 		AgentName: "Inference", Status: fmt.Sprintf("ACTIVE (Blueprints: %d)", bpCount), Role: "Brain", Timestamp: timestamppb.Now(),
@@ -119,10 +125,14 @@ func (s *InferenceServer) Pulse(ctx context.Context, req *connect.Request[olympu
 }
 
 func (s *InferenceServer) LoadBlueprints() error {
-	s.mu.Lock(); defer s.mu.Unlock(); s.blueprints = make(map[string]string)
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.blueprints = make(map[string]string)
 
 	matches, err := filepath.Glob("blueprints/*.jebnf")
-	if err != nil { return err }
+	if err != nil {
+		return err
+	}
 	for _, m := range matches {
 		data, err := os.ReadFile(filepath.Clean(m))
 		if err == nil {
@@ -137,9 +147,11 @@ func (s *InferenceServer) LoadBlueprints() error {
 }
 
 func main() {
-	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}); slog.SetDefault(slog.New(handler))
+	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo})
+	slog.SetDefault(slog.New(handler))
 
-	meshHubURL := getEnv("MESH_HUB_URL", "http://localhost:8090"); guardianURL := getEnv("GUARDIAN_URL", "http://localhost:8082")
+	meshHubURL := getEnv("MESH_HUB_URL", "http://localhost:8090")
+	guardianURL := getEnv("GUARDIAN_URL", "http://localhost:8082")
 
 	server := &InferenceServer{sc: whisper.New("Inference", "inference.lpsv")}
 	if err := server.LoadBlueprints(); err != nil {
@@ -156,7 +168,8 @@ func main() {
 		Handler:           h2c.NewHandler(mux, &http2.Server{}),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
-	stop := make(chan os.Signal, 1); signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		time.Sleep(1 * time.Second)
 
@@ -177,13 +190,8 @@ func main() {
 }
 
 func getEnv(key, fallback string) string {
-	if val, ok := os.LookupEnv(key); ok { return val }
+	if val, ok := os.LookupEnv(key); ok {
+		return val
+	}
 	return fallback
 }
-
-
-
-
-
-
-

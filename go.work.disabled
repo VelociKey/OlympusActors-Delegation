@@ -1,7 +1,0 @@
-go 1.25.7
-
-use (
-	./10000-Autonomous-Actors/10500-Delegation-Management/10520-Market-Coordination
-	./10000-Autonomous-Actors/10500-Delegation-Management/10530-Orchestration-Control
-	./10000-Autonomous-Actors/10700-Processing-Engines/10710-Reasoning-Inference
-)

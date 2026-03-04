@@ -1,7 +1,7 @@
 package main
 
 import "context"
-import "dagger/olympusactors-delegation/internal/dagger"
+import "olympus.fleet/00SDLC/OlympusForge/70000-Environmental-Harness/dagger/olympusactors-delegation/internal/dagger"
 
 type OlympusActorsDelegation struct{}
 
