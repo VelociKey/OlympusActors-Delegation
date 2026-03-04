@@ -27,7 +27,8 @@ tmp/
 .history/
 
 # --- Large Binaries & Tooling (CRITICAL: DO NOT COMMIT) ---
-# Maps to 90000-Enablement/Tools
+# Maps to 81000-Toolchain-External and 90000-Enablement/Tools
+81000-Toolchain-External/
 **/Tools/
 **/sdk/
 **/jvm-sdk/
@@ -38,6 +39,16 @@ tmp/
 dagger.log
 .terraform/
 terraform.tfstate*
+
+# --- Provisioner Managed Tools ---
+90000-Enablement-Labs/000-Tools/000-bin/
+90000-Enablement-Labs/000-Tools/000-*/
+!90000-Enablement-Labs/000-Tools/000-*/
+!90000-Enablement-Labs/000-Tools/000-*/**/main.go
+!90000-Enablement-Labs/000-Tools/000-*/**/*.go
+!90000-Enablement-Labs/000-Tools/000-*/**/*.mod
+!90000-Enablement-Labs/000-Tools/000-*/**/*.sum
+!90000-Enablement-Labs/000-Tools/tool_symbols.jebnf
 
 # --- IDE & OS (VS Code / JetBrains / Windows / macOS) ---
 .vscode/*
