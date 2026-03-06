@@ -18,10 +18,10 @@ agent-binary
 
 # --- Workspace Hygiene (Wraith Structured Folders) ---
 # These folders are designated for ephemeral or generated artifacts
-C0400-Artifacts/
-C0500-Agent-Out/
-C0700-System-Work/
-C0990-Scratch/
+C0400-Artifact-Repository/
+C0500-Agent-Intelligence-Outputs/
+C0700-System-Operations/
+C0990-Ephemeral-Scratch/
 tmp/
 .temp/
 .history/
@@ -182,4 +182,9 @@ test_output.txt
 !9*/
 8*/**/*
 9*/**/*
+!**/.gitkeep
+
+
+# Ensure structure preservation via .gitkeep
+!**/.gitkeep
 !**/.gitkeep
