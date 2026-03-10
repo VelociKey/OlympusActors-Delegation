@@ -18,10 +18,10 @@ agent-binary
 
 # --- Workspace Hygiene (Wraith Structured Folders) ---
 # These folders are designated for ephemeral or generated artifacts
-C0400-Artifact-Repository/
-C0500-Agent-Intelligence-Outputs/
-C0700-System-Operations/
-C0990-Ephemeral-Scratch/
+C0400-Artifact-Repository/**
+C0500-Agent-Intelligence-Outputs/**
+C0700-System-Operations/**
+C0990-Ephemeral-Scratch/**
 tmp/
 .temp/
 .history/
@@ -49,6 +49,14 @@ dagger.log
 terraform.tfstate*
 
 # --- Provisioner Managed Tools ---
+90000-Enablement-Labs/000-Tools/000-bin/
+90000-Enablement-Labs/000-Tools/000-*/
+!90000-Enablement-Labs/000-Tools/000-*/
+!90000-Enablement-Labs/000-Tools/000-*/**/main.go
+!90000-Enablement-Labs/000-Tools/000-*/**/*.go
+!90000-Enablement-Labs/000-Tools/000-*/**/*.mod
+!90000-Enablement-Labs/000-Tools/000-*/**/*.sum
+!90000-Enablement-Labs/000-Tools/tool_symbols.jebnf
 
 # --- Labs & Enablers Bloat ---
 ZC0400-Sovereign-Source/
@@ -177,14 +185,23 @@ test_output.txt
 !C0700-System-Operations/
 
 # --- Sovereign Skeletons (Visibility & Structure - FINAL OVERRIDE) ---
-# Ranges: 8x000, 9x000, and 9xxx
-!8*/
-!9*/
-8*/**/*
-9*/**/*
-!**/.gitkeep
+!80000-System-Governance/
+!81000-Toolchain-External/
+!82000-Toolchain-Fleet/
+!83000-Agent-Templates/
+!84000-Product-Plane/
+!85000-Intelligence-Plane/
+!90000-Enablement-Labs/
+!930-System-Enablers/
 
+80000-System-Governance/**/*
+81000-Toolchain-External/**/*
+82000-Toolchain-Fleet/**/*
+83000-Agent-Templates/**/*
+84000-Product-Plane/**/*
+85000-Intelligence-Plane/**/*
+90000-Enablement-Labs/**/*
+930-System-Enablers/**/*
 
 # Ensure structure preservation via .gitkeep
-!**/.gitkeep
 !**/.gitkeep
