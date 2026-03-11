@@ -76,7 +76,7 @@ func main() {
 	server := &OrchestratorServer{
 		agentToken:      token,
 		memoryClient:    olympusv1connect.NewMemoryServiceClient(http.DefaultClient, getEnv("MEMORY_URL", "http://localhost:8084"), interceptors),
-		knowledgeClient: olympusv1connect.NewKnowledgeServiceClient(http.DefaultClient, getEnv("CARTOGRAPHER_URL", "http://localhost:8095"), interceptors),
+		knowledgeClient: olympusv1connect.NewKnowledgeServiceClient(http.DefaultClient, getEnv("CARTOGRAPHER_URL", "http://localhost:8096"), interceptors),
 		inferenceClient: olympusv1connect.NewInferenceServiceClient(http.DefaultClient, getEnv("INFERENCE_URL", "http://localhost:8087"), interceptors),
 		sc:              whisper.New("Orchestrator", "orchestrator.lpsv"),
 	}

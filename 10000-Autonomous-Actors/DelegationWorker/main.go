@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/signal"
 	"sync"
 	"syscall"
@@ -17,6 +18,8 @@ import (
 
 	olympusv1 "olympus.fleet/00SDLC/Olympus2/40000-Communication-Contracts/40400-Protocol-Synthetics/connect-rpc/olympus/v1"
 	"olympus.fleet/00SDLC/Olympus2/40000-Communication-Contracts/40400-Protocol-Synthetics/connect-rpc/olympus/v1/olympusv1connect"
+	mesh "olympus.fleet/00SDLC/Olympus2/90000-Enablement-Labs/90200-Logic-Libraries/150-Mesh"
+	whisper "olympus.fleet/00SDLC/Olympus2/90000-Enablement-Labs/90200-Logic-Libraries/220-Whisper"
 	auth "olympus.fleet/00SDLC/Olympus2/90000-Enablement-Labs/90200-Logic-Libraries/110-Auth"
 )
 
@@ -24,6 +27,7 @@ type WorkerServer struct {
 	olympusv1connect.UnimplementedDelegationServiceHandler
 	mu      sync.Mutex
 	results map[string]*olympusv1.TaskStatusEvent
+	sc      *whisper.WhisperLog
 }
 
 func (s *WorkerServer) DelegateTask(ctx context.Context, req *connect.Request[olympusv1.DelegateTaskRequest]) (*connect.Response[olympusv1.DelegateTaskResponse], error) {
@@ -32,17 +36,30 @@ func (s *WorkerServer) DelegateTask(ctx context.Context, req *connect.Request[ol
 
 	slog.Info("Delegation: Task Accepted", "jobID", jobID, "user", userID, "task", req.Msg.TaskDescription)
 
-	// Mock async execution
+	// Async execution
 	go func() {
-		time.Sleep(5 * time.Second)
+		cmdStr := req.Msg.TaskDescription
+		slog.Info("Delegation: Executing", "command", cmdStr)
+
+		// Execute as shell command (Windows)
+		cmd := exec.Command("cmd", "/C", cmdStr)
+		output, err := cmd.CombinedOutput()
+
+		status := "COMPLETED"
+		msg := fmt.Sprintf("Output: %s", string(output))
+		if err != nil {
+			status = "FAILED"
+			msg = fmt.Sprintf("Error: %v | Output: %s", err, string(output))
+		}
+
 		s.mu.Lock()
 		s.results[jobID] = &olympusv1.TaskStatusEvent{
 			JobId:   jobID,
-			Status:  "COMPLETED",
-			Message: fmt.Sprintf("Worker successfully processed: %s", req.Msg.TaskDescription),
+			Status:  status,
+			Message: msg,
 		}
 		s.mu.Unlock()
-		slog.Info("Delegation: Task Completed", "jobID", jobID)
+		slog.Info("Delegation: Task Finished", "jobID", jobID, "status", status)
 	}()
 
 	return connect.NewResponse(&olympusv1.DelegateTaskResponse{
@@ -74,6 +91,7 @@ func main() {
 
 	server := &WorkerServer{
 		results: make(map[string]*olympusv1.TaskStatusEvent),
+		sc:      whisper.New("DelegationWorker", "worker.lpsv"),
 	}
 
 	mux := http.NewServeMux()
@@ -81,7 +99,15 @@ func main() {
 	path, handler := olympusv1connect.NewDelegationServiceHandler(server, interceptors)
 	mux.Handle(path, handler)
 
-	addr := ":8087" // Standard Port for Delegation Workers in Mesh
+	mux.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
+		slog.Info("Shutdown requested via HTTP")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "Shutdown sequence initiated")
+		stop <- os.Interrupt
+	})
+
+	addr := ":8088" // Standard Port for Delegation Workers in Mesh
+	meshHubURL := getEnv("MESH_HUB_URL", "http://localhost:8090")
 	slog.Info("Starting Olympus Delegation Worker", "addr", addr)
 
 	srv := &http.Server{
@@ -94,11 +120,25 @@ func main() {
 	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 
 	go func() {
+		time.Sleep(1 * time.Second)
+		if err := mesh.RegisterWithMesh(context.Background(), meshHubURL, "DelegationWorker", 8088, "execution", []string{"shell-exec"}); err != nil {
+			slog.Error("Failed to register with mesh", "error", err)
+		}
+		server.sc.Log("startup", "READY", "localhost:8088", "Delegation Worker active", 0)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			slog.Error("Worker Server failed", "error", err)
 		}
 	}()
 
 	<-stop
+	server.sc.Log("shutdown", "OFFLINE", "localhost:8088", "Graceful shutdown initiated", 0)
+	server.sc.Close()
 	slog.Info("Shutting down worker...")
+}
+
+func getEnv(key, fallback string) string {
+	if val, ok := os.LookupEnv(key); ok {
+		return val
+	}
+	return fallback
 }

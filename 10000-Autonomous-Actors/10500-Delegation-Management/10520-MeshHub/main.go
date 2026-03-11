@@ -63,10 +63,20 @@ func main() {
 	slog.SetDefault(slog.New(handler))
 	guardianURL := getEnv("GUARDIAN_URL", "http://localhost:8082")
 	hub := &MeshHubServer{agents: make(map[string]*AgentRecord), running: make(map[string]*exec.Cmd), sc: whisper.New("MeshHub", "meshhub.lpsv")}
+	
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+
 	mux := http.NewServeMux()
 	interceptors := connect.WithInterceptors(mesh.NewInterceptor(guardianURL))
 	mux.Handle(olympusv1connect.NewMeshServiceHandler(hub, interceptors))
 	mux.HandleFunc("/status", hub.handleStatus)
+	mux.HandleFunc("/shutdown", func(w http.ResponseWriter, r *http.Request) {
+		slog.Info("Shutdown requested via HTTP")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "Shutdown sequence initiated")
+		stop <- os.Interrupt
+	})
 	// Health Check / Pulse
 	mux.HandleFunc("/pulse", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -78,15 +88,16 @@ func main() {
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 	go hub.watchdog()
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		slog.Info("MeshHub starting", "port", "8090")
+		hub.sc.Log("startup", "READY", "localhost:8090", "Mesh Registry active", 0)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			slog.Error("Server failed", "error", err)
 		}
 	}()
 	<-stop
+	hub.sc.Log("shutdown", "OFFLINE", "localhost:8090", "Graceful shutdown initiated", 0)
+	hub.sc.Close()
 	if err := srv.Shutdown(context.Background()); err != nil {
 		slog.Error("Server shutdown error", "error", err)
 	}
